@@ -1,4 +1,4 @@
-name: Deploy Backend to Azure App Service
+name: CI/CD Backend Quiz App
 
 on:
   push:
@@ -7,7 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  # ─── JOB 1: Quality Check ─────────────────────────────────────────────────
+  # Lint dan test dijalankan SEBELUM deploy.
+  # Kalau ada yang gagal, deploy tidak akan jalan.
+  quality-check:
+    name: Lint & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -18,16 +22,36 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Verify Files
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Files:"
-          ls -la
+      - name: Run ESLint (Code Quality)
+        run: npm run lint
+
+      - name: Run Jest Tests
+        run: npm test
+
+  # ─── JOB 2: Deploy ────────────────────────────────────────────────────────
+  # Hanya jalan kalau job "quality-check" di atas BERHASIL semua.
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    needs: quality-check  # ← tunggu quality-check selesai & sukses dulu
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
