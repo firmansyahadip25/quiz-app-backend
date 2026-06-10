@@ -30,8 +30,8 @@ jobs:
       - name: Run ESLint (Code Quality)
         run: npm run lint
 
-      - name: Run Jest Tests
-        run: npm test
+      - name: Run Jest Tests & Coverage
+        run: npm run test:coverage
 
   # ─── JOB 2: Deploy ────────────────────────────────────────────────────────
   # Hanya jalan kalau job "quality-check" di atas BERHASIL semua.

@@ -19,7 +19,19 @@
     },
     "testMatch": [
       "**/*.test.js"
-    ]
+    ],
+    "collectCoverageFrom": [
+      "src/controllers/**/*.js",
+      "!src/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
   },
   "dependencies": {
     "cors": "^2.8.5",
