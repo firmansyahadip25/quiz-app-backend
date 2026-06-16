@@ -86,7 +86,6 @@ router.post('/', async (req, res) => {
 
   if (
     !playerId ||
-    !quizId ||
     !question ||
     !answer ||
     !correctAnswer ||

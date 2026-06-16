@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 // Skema untuk Mongoose Score
 const scoreSchema = new mongoose.Schema({
   playerId: { type: String, required: true },
-  quizId: { type: String, required: true },
+  quizId: { type: String, default: null },
   playerName: { type: String, required: true },
   playerPicture: { type: String, default: null },
   score: { type: Number, required: true },

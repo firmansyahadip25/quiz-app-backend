@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const quizReviewSchema = new mongoose.Schema({
-  playerId: { type: String, required: true },
+  playerId: { type: String, default: null },
   quizId: { type: String, required: true },
   question: { type: String, required: true },
   answer: { type: String, required: true },
