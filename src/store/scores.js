@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 // Skema untuk Mongoose Score
 const scoreSchema = new mongoose.Schema({
   playerId: { type: String, required: true },
+  quizId: { type: String, default: null },
   playerName: { type: String, required: true },
   playerPicture: { type: String, default: null },
   score: { type: Number, required: true },
@@ -16,11 +17,12 @@ const Score = mongoose.model('Score', scoreSchema)
 /**
  * Tambah skor baru ke MongoDB.
  */
-export async function addScore({ playerId, playerName, playerPicture, score, total, percentage }) {
+export async function addScore({ playerId, playerName, playerPicture, quizId, score, total, percentage }) {
   const newScore = new Score({
     playerId: playerId || playerName,
     playerName,
     playerPicture: playerPicture || null,
+    quizId,
     score,
     total,
     percentage
@@ -56,6 +58,13 @@ export async function getTopScores(limit = 20) {
       $limit: limit
     }
   ])
+}
+
+/**
+ * Ambil skor berdasarkan ID dokumen
+ */
+export async function getScoreById(id) {
+  return await Score.findById(id)
 }
 
 /**

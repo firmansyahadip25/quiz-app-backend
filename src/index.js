@@ -4,6 +4,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import authRouter from './routes/auth.js'
 import scoresRouter from './routes/scores.js'
+import quizReviewRouter from './routes/quizreview.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -62,6 +63,7 @@ app.get('/', (req, res) => {
 // === ROUTES ===
 app.use('/api/auth', authRouter)
 app.use('/api/scores', scoresRouter)
+app.use('/api/quizreview', quizReviewRouter)
 
 // 404 handler
 app.use((req, res) => {
@@ -79,5 +81,3 @@ app.listen(PORT, () => {
 })
 
 export default app
-
-//test
